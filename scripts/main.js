@@ -174,7 +174,7 @@ function animate(timestamp) {
 }
 
 // AMD support
-aif (typeof define === 'function' && define.amd) {
+if (typeof define === 'function' && define.amd) {
     define(root.MainLoop);
 }
 // CommonJS support
