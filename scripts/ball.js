@@ -1,10 +1,13 @@
-var myBalls = [];
+var myBalls;
+var damping = 0.9;
+var gravity = 49;
 
-function spawn(x, y, vy, vx){
+function spawn(x, y, vx, vy){
     var letters = "0123456789abcdef";
     var temp = Object.create(ball);
     temp.x = x;
     temp.y = y;
+    temp.vx = vx;
     temp.vy = vy;
   
     var color = "#";
@@ -35,12 +38,26 @@ var ball = {
   
     update: function(delta){
         var canvas = document.getElementById('gameCanvas');
-        this.vy += 49 * delta / 1000;
+        this.vy += gravity * delta / 1000;
         this.y += this.vy;
+        this.x += this.vx;
 
-        if(this.y > canvas.height - this.radius * 2){
-          this.y = canvas.height - this.radius * 2;
-          this.vy = -this.vy * 0.9;
+        if(this.x > canvas.clientWidth - this.radius){
+            this.x = canvas.clientWidth - this.radius;
+            this.vx = -this.vx * damping;
+        }
+        else if(this.x < this.radius){
+            this.x = this.radius;
+            this.vx = -this.vx * damping;
+        }
+
+        if(this.y > canvas.clientHeight - this.radius){
+            this.y = canvas.clientHeight - this.radius;
+            this.vy = -this.vy * damping;
+        }
+        else if(this.y < this.radius){
+            this. y = this.radius;
+            this.vy = -this.vy * damping;
         }
     },
   

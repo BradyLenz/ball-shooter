@@ -3,3 +3,11 @@ html, body{
     height: 100%;
     margin: 0px;
 }
+
+#gameCanvas{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
