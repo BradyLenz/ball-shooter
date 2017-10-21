@@ -1,4 +1,4 @@
-var myBalls;
+var myBalls = [];
 var damping = 0.9;
 var gravity = 49;
 

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function(){
-  myBalls = [];
 })
 
 var launching = false;
@@ -34,29 +33,24 @@ function launch(finalX, finalY){
   var v = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
   v = Math.min(v, maxV);
   var vf = map(v, 0, maxV, 0, maxVf);
-  //console.log(vf);
 
   var x2, y2 = 0;
 
   if(x > 0 && y > 0){
-    x2 = Math.sin(theta) * maxVf;
-    y2 = Math.cos(theta) * maxVf;
-    console.log("1");
+    x2 = Math.sin(theta) * vf;
+    y2 = Math.cos(theta) * vf;
   }
   else if(x > 0 && y < 0){
-    x2 = Math.sin(Math.PI - theta) * maxVf;
-    y2 = Math.cos(Math.PI - theta) * maxVf;
-    console.log("2");
+    x2 = Math.sin(Math.PI - theta) * vf;
+    y2 = Math.cos(Math.PI - theta) * vf;
   }
   else if(x < 0 && y < 0){
-    x2 = Math.sin(theta + Math.PI) * maxVf;
-    y2 = Math.cos(theta + Math.PI) * maxVf;
-    console.log("3");
+    x2 = Math.sin(theta + Math.PI) * vf;
+    y2 = Math.cos(theta + Math.PI) * vf;
   }
   else if (x < 0 && y > 0){
-    x2 = Math.sin(-theta) * maxVf;
-    y2 = Math.cos(-theta) * maxVf;
-    console.log("4");
+    x2 = Math.sin(-theta) * vf;
+    y2 = Math.cos(-theta) * vf;
   }
 
   spawn(startX, startY, x2, y2);
@@ -114,8 +108,10 @@ function loop(timestamp) {
   else{
     var delta = timestamp - lastRender;
     
-    update(delta);
-    draw();
+    if(typeof myBalls != "undefined"){
+      update(delta);
+      draw();
+    }
   }
   
   lastRender = timestamp;
