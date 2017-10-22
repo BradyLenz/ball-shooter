@@ -1,6 +1,6 @@
 var myBalls = [];
 var damping = 0.9;
-var gravity = 49;
+var gravity = 30;
 
 function spawn(x, y, vx, vy){
     var letters = "0123456789abcdef";
@@ -16,6 +16,52 @@ function spawn(x, y, vx, vy){
     }
     temp.color = color;
     myBalls.push(temp);
+}
+
+var maxV = 350;
+var minVf = 5;
+var maxVf = 20;
+function launch(finalX, finalY){
+  var v = scaleVelocity(finalX, finalY);
+  spawn(startX, startY, v[0], v[1]);
+}
+
+function scaleVelocity(finalX, finalY){
+  var x = startX - finalX;
+  var y = startY - finalY;
+  var x2 = 0, y2 = 0;
+
+  if(x == 0){
+    y2 = map(y, 0, maxV, minVf, maxVf);
+  }
+  else if(y == 0){
+    x2 = map(x, 0, maxV, minVf, maxVf);
+  }
+  else{
+    var theta = Math.atan(Math.abs(x/y));
+    var v = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    v = Math.min(v, maxV);
+    var vf = map(v, 0, maxV, minVf, maxVf);
+  
+    if(x > 0 && y > 0){
+      x2 = Math.sin(theta) * vf;
+      y2 = Math.cos(theta) * vf;
+    }
+    else if(x > 0 && y < 0){
+      x2 = Math.sin(Math.PI - theta) * vf;
+      y2 = Math.cos(Math.PI - theta) * vf;
+    }
+    else if(x < 0 && y < 0){
+      x2 = Math.sin(theta + Math.PI) * vf;
+      y2 = Math.cos(theta + Math.PI) * vf;
+    }
+    else if (x < 0 && y > 0){
+      x2 = Math.sin(-theta) * vf;
+      y2 = Math.cos(-theta) * vf;
+    }
+  }
+
+  return [x2, y2];
 }
 
 var ball = {
@@ -64,8 +110,5 @@ var ball = {
     destroy: function(){
       var index = myBalls.indexOf(this);
       myBalls.splice(index, 1);
-      if(index == -1){
-        console.log("breh");
-      }
     }
 }
