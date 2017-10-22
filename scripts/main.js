@@ -31,10 +31,8 @@ function loop(timestamp) {
   else{
     var delta = timestamp - lastRender;
     
-    if(typeof myBalls != "undefined"){
-      update(delta);
-      draw();
-    }
+    update(delta);
+    draw();
   }
   
   lastRender = timestamp;
